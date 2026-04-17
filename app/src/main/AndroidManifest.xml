@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".NewsApplication"
@@ -14,6 +14,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsCircle">
+        <activity
+            android:name=".ui.pagination.TopHeadlinePaginationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.offline.OfflineTopHeadlineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.search.SearchNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.language.NewsByLanguageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.country.NewsByCountryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.source.NewsSourceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.topheadline.TopHeadlineActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

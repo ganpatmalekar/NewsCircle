@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">NewsCircle</string>
+    <string name="copyright_text">©2026 NewsCircle. All rights reserved.</string>
+    <string name="top_headlines">Top Headlines</string>
+    <string name="top_headlines_subtext">Breaking news from around the world</string>
+    <string name="news_sources">News Sources</string>
+    <string name="news_sources_subtext">Browse all available news sources</string>
+    <string name="country_selection">Country Selection</string>
+    <string name="country_selection_subtext">Filter news by country</string>
+    <string name="language_selection">Language Selection</string>
+    <string name="language_selection_subtext">Choose your preferred language</string>
+    <string name="search_text">Search</string>
+    <string name="search_subtext">Search for specific news topics</string>
+    <string name="app_slogan">Stay informed with the latest news</string>
+    <string name="select_country">Select Country</string>
+    <string name="all_countries">All Countries</string>
+    <string name="no_articles_found">No Articles Found</string>
+    <string name="select_language">Select Language</string>
+    <string name="english">English</string>
+    <string name="no_articles_found_subtitle">There are no articles available for %1$s at the moment.</string>
+    <string name="search_news_hint">Search for news…</string>
+    <string name="search_news_helper_text">Start typing to search for news</string>
+    <string name="top_headlines_offline_architecture">Top Headlines (Offline Architecture)</string>
+    <string name="top_headlines_offline_architecture_subtext">Access news even without internet</string>
+    <string name="top_headlines_pagination">Top Headlines (Pagination)</string>
+    <string name="top_headlines_pagination_subtext">Browse news with page navigation</string>
+    <string name="try_again">Try Again</string>
+    <string name="no_articles_found_at_the_moment">No articles found at the moment, please after sometime.</string>
 </resources>
