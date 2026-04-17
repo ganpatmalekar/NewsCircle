@@ -38,7 +38,7 @@ class TopHeadlineViewModel(
             getAllTopHeadlines()
         } else {
             _topHeadlineUiState.value =
-                UiState.Error("Please check your internet connection and try again.")
+                UiState.Error(AppConstants.NO_INTERNET_MSG)
         }
     }
 

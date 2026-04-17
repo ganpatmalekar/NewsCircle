@@ -2,6 +2,8 @@ package com.gsm.newscircle.di.component
 
 import android.content.Context
 import com.gsm.newscircle.NewsApplication
+import com.gsm.newscircle.data.repository.NewsListRepository
+import com.gsm.newscircle.data.repository.NewsSourceRepository
 import com.gsm.newscircle.data.repository.TopHeadlineRepository
 import com.gsm.newscircle.di.ApplicationContext
 import com.gsm.newscircle.di.module.ApplicationModule
@@ -21,6 +23,8 @@ interface ApplicationComponent {
     fun getContext(): Context
 
     fun getTopHeadlineRepository(): TopHeadlineRepository
+    fun getNewsSourceRepository(): NewsSourceRepository
+    fun getNewsListRepository(): NewsListRepository
 
     fun getDispatcherProvider(): DispatcherProvider
 
