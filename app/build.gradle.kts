@@ -24,14 +24,20 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "API_KEY", "\"826fd61f08c74ae3a856799fc4eb9a35\"")
         }
         debug {
             isDebuggable = true
+            buildConfigField("String", "API_KEY", "\"826fd61f08c74ae3a856799fc4eb9a35\"")
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -52,6 +58,12 @@ dependencies {
 
     // Core OkHttp library
     implementation(libs.okhttp)
+
+    // Logging Interceptor (separate dependency)
+    implementation(libs.logging.interceptor)
+
+    // Custom Tab
+    implementation(libs.androidx.browser)
 
     // Glide
     implementation(libs.glide)
