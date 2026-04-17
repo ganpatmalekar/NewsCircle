@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsCircle">
         <activity
+            android:name=".ui.news.NewsListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.pagination.TopHeadlinePaginationActivity"
             android:exported="false" />
         <activity

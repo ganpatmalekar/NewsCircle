@@ -25,5 +25,8 @@
     <string name="top_headlines_pagination">Top Headlines (Pagination)</string>
     <string name="top_headlines_pagination_subtext">Browse news with page navigation</string>
     <string name="try_again">Try Again</string>
-    <string name="no_articles_found_at_the_moment">No articles found at the moment, please after sometime.</string>
+    <string name="no_articles_found_at_the_moment">No articles found at the moment, please check after sometime.</string>
+    <string name="news_by_sources">News by Sources</string>
+    <string name="no_sources_found">No Sources Found</string>
+    <string name="no_sources_found_at_the_moment">No sources found at the moment, please check after sometime.</string>
 </resources>
