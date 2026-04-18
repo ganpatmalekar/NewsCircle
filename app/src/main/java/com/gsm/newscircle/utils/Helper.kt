@@ -6,6 +6,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.SHARE_STATE_ON
 import androidx.core.net.toUri
 import com.gsm.newscircle.data.model.Country
+import com.gsm.newscircle.data.model.Language
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -45,27 +46,27 @@ object Helper {
             Country(name, code, flag)
         }.sortedBy { it.name }
     }
-//
-//    fun getSupportedNewsLanguages(): List<Language> {
-//        val supportedCodes = listOf(
-//            "ar", "de", "en", "es", "fr", "he", "it",
-//            "nl", "no", "pt", "ru", "sv", "ud", "zh"
-//        )
-//
-//        return supportedCodes.map { code ->
-//            val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
-//                Locale.of(code)
-//            } else {
-//                @Suppress("DEPRECATION")
-//                Locale(code)
-//            }
-//            // .displayLanguage will return "English", "Spanish", etc.
-//            // based on the user's phone settings.
-//            val name = locale.displayLanguage.replaceFirstChar { it.uppercase() }
-//
-//            Language(name, code)
-//        }.sortedBy { it.name }
-//    }
+
+    fun getSupportedNewsLanguages(): List<Language> {
+        val supportedCodes = listOf(
+            "ar", "de", "en", "es", "fr", "he", "it",
+            "nl", "no", "pt", "ru", "sv", "ud", "zh"
+        )
+
+        return supportedCodes.map { code ->
+            val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+                Locale.of(code)
+            } else {
+                @Suppress("DEPRECATION")
+                Locale(code)
+            }
+            // .displayLanguage will return "English", "Spanish", etc.
+            // based on the user's phone settings.
+            val name = locale.displayLanguage.replaceFirstChar { it.uppercase() }
+
+            Language(name, code)
+        }.sortedBy { it.name }
+    }
 
     /**
      * Maps network exceptions and HTTP status codes to user-friendly error messages.

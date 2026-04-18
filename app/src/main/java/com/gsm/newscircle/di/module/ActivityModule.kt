@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.gsm.newscircle.data.repository.CountryListRepository
+import com.gsm.newscircle.data.repository.LanguageListRepository
 import com.gsm.newscircle.data.repository.NewsListRepository
 import com.gsm.newscircle.data.repository.NewsSourceRepository
 import com.gsm.newscircle.data.repository.TopHeadlineRepository
@@ -11,6 +12,8 @@ import com.gsm.newscircle.di.ActivityContext
 import com.gsm.newscircle.ui.base.ViewModelProviderFactory
 import com.gsm.newscircle.ui.country.CountryListAdapter
 import com.gsm.newscircle.ui.country.CountryListViewModel
+import com.gsm.newscircle.ui.language.LanguageListAdapter
+import com.gsm.newscircle.ui.language.LanguageListViewModel
 import com.gsm.newscircle.ui.news.NewsListViewModel
 import com.gsm.newscircle.ui.source.NewsSourceAdapter
 import com.gsm.newscircle.ui.source.NewsSourceViewModel
@@ -108,6 +111,24 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
     }
 
     @Provides
+    fun providesLanguageListViewModel(
+        languageListRepository: LanguageListRepository,
+        dispatcherProvider: DispatcherProvider,
+        loggerService: LoggerService
+    ): LanguageListViewModel {
+        return ViewModelProvider(
+            mActivity,
+            ViewModelProviderFactory(LanguageListViewModel::class) {
+                LanguageListViewModel(
+                    languageListRepository,
+                    dispatcherProvider,
+                    loggerService
+                )
+            }
+        )[LanguageListViewModel::class.java]
+    }
+
+    @Provides
     fun providesTopHeadlineAdapter() = TopHeadlineAdapter()
 
     @Provides
@@ -115,4 +136,7 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
 
     @Provides
     fun providesCountryListAdapter() = CountryListAdapter()
+
+    @Provides
+    fun providesLanguageListAdapter() = LanguageListAdapter()
 }

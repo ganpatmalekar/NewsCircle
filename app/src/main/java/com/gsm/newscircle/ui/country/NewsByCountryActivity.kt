@@ -53,24 +53,24 @@ class NewsByCountryActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.apply {
-            binding.toolbarLayout.apply {
+            toolbarLayout.apply {
                 tvTitle.text = getString(R.string.country_selection)
                 ivNavBack.setOnClickListener {
                     finish()
                 }
             }
-            binding.clSelectCountry.setOnClickListener {
+            clSelectCountry.setOnClickListener {
                 val bottomSheet = CountryListBottomSheet(selectedCountryCode)
                 bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
-            binding.rvNews.apply {
+            rvNews.apply {
                 layoutManager = LinearLayoutManager(this@NewsByCountryActivity)
                 setHasFixedSize(true)
                 adapter = topHeadlineAdapter
             }
-            topHeadlineAdapter.itemClickListener = { article ->
-                openNewsOnBrowser(this@NewsByCountryActivity, article.url)
-            }
+        }
+        topHeadlineAdapter.itemClickListener = { article ->
+            openNewsOnBrowser(this@NewsByCountryActivity, article.url)
         }
     }
 

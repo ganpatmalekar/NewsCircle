@@ -76,4 +76,28 @@ class NewsListViewModel(
                 }
         }
     }
+
+    fun fetchAllNewsByLanguage(language: String) {
+        if (isInternetAvailable()) {
+            getAllNewsByLanguage(language)
+        } else {
+            _newsUiState.value = UiState.Error(AppConstants.NO_INTERNET_MSG)
+        }
+    }
+
+    private fun getAllNewsByLanguage(language: String) {
+        _newsUiState.value = UiState.Loading
+        viewModelScope.launch(dispatcherProvider.main) {
+            newsListRepository.getAllNewsByLanguage(language)
+                .flowOn(dispatcherProvider.io)
+                .catch { e ->
+                    _newsUiState.value = UiState.Error(handleError(e))
+                    logger.e(NEWS_LIST_VIEWMODEL_TAG, e.toString())
+                }
+                .collect {
+                    _newsUiState.value = UiState.Success(it)
+                    logger.d(NEWS_LIST_VIEWMODEL_TAG, it.size.toString())
+                }
+        }
+    }
 }
