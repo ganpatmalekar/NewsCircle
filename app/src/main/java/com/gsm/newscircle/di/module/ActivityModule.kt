@@ -3,11 +3,14 @@ package com.gsm.newscircle.di.module
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.gsm.newscircle.data.repository.CountryListRepository
 import com.gsm.newscircle.data.repository.NewsListRepository
 import com.gsm.newscircle.data.repository.NewsSourceRepository
 import com.gsm.newscircle.data.repository.TopHeadlineRepository
 import com.gsm.newscircle.di.ActivityContext
 import com.gsm.newscircle.ui.base.ViewModelProviderFactory
+import com.gsm.newscircle.ui.country.CountryListAdapter
+import com.gsm.newscircle.ui.country.CountryListViewModel
 import com.gsm.newscircle.ui.news.NewsListViewModel
 import com.gsm.newscircle.ui.source.NewsSourceAdapter
 import com.gsm.newscircle.ui.source.NewsSourceViewModel
@@ -87,8 +90,29 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
     }
 
     @Provides
+    fun providesCountryListViewModel(
+        countryListRepository: CountryListRepository,
+        dispatcherProvider: DispatcherProvider,
+        loggerService: LoggerService
+    ): CountryListViewModel {
+        return ViewModelProvider(
+            mActivity,
+            ViewModelProviderFactory(CountryListViewModel::class) {
+                CountryListViewModel(
+                    countryListRepository,
+                    dispatcherProvider,
+                    loggerService
+                )
+            }
+        )[CountryListViewModel::class.java]
+    }
+
+    @Provides
     fun providesTopHeadlineAdapter() = TopHeadlineAdapter()
 
     @Provides
     fun providesNewsSourceAdapter() = NewsSourceAdapter()
+
+    @Provides
+    fun providesCountryListAdapter() = CountryListAdapter()
 }

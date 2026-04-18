@@ -38,8 +38,33 @@ class NewsListViewModel(
     }
 
     private fun getAllNewsBySources(sources: String) {
+        _newsUiState.value = UiState.Loading
         viewModelScope.launch(dispatcherProvider.main) {
             newsListRepository.getAllNewsBySource(sources)
+                .flowOn(dispatcherProvider.io)
+                .catch { e ->
+                    _newsUiState.value = UiState.Error(handleError(e))
+                    logger.e(NEWS_LIST_VIEWMODEL_TAG, e.toString())
+                }
+                .collect {
+                    _newsUiState.value = UiState.Success(it)
+                    logger.d(NEWS_LIST_VIEWMODEL_TAG, it.size.toString())
+                }
+        }
+    }
+
+    fun fetchAllNewsByCountry(country: String) {
+        if (isInternetAvailable()) {
+            getAllNewsByCountry(country)
+        } else {
+            _newsUiState.value = UiState.Error(AppConstants.NO_INTERNET_MSG)
+        }
+    }
+
+    private fun getAllNewsByCountry(country: String) {
+        _newsUiState.value = UiState.Loading
+        viewModelScope.launch(dispatcherProvider.main) {
+            newsListRepository.getAllNewsByCountry(country)
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _newsUiState.value = UiState.Error(handleError(e))

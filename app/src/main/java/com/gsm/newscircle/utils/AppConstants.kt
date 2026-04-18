@@ -12,4 +12,5 @@ object AppConstants {
     const val TOP_HEADLINE_VIEWMODEL_TAG = "TopHeadlineViewModel"
     const val NEWS_SOURCE_VIEWMODEL_TAG = "NewsSourceViewModel"
     const val NEWS_LIST_VIEWMODEL_TAG = "NewsListViewModel"
+    const val COUNTRY_LIST_VIEWMODEL_TAG = "CountryListViewModel"
 }

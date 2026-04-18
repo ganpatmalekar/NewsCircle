@@ -1,12 +1,15 @@
 package com.gsm.newscircle.utils
 
 import android.content.Context
+import android.os.Build
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.SHARE_STATE_ON
 import androidx.core.net.toUri
+import com.gsm.newscircle.data.model.Country
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
+import java.util.Locale
 
 object Helper {
 
@@ -17,31 +20,31 @@ object Helper {
             .launchUrl(context, url.toUri())
     }
 
-//    fun getSupportedNewsCountries(): List<Country> {
-//        val supportedCodes = setOf(
-//            "ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co", "cu", "cz", "de",
-//            "eg", "fr", "gb", "gr", "hk", "hu", "id", "ie", "il", "in", "it", "jp", "kr", "lt",
-//            "lv", "ma", "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro", "rs", "ru",
-//            "sa", "se", "sg", "si", "sk", "th", "tr", "tw", "ua", "us", "ve", "za"
-//        )
-//
-//        return supportedCodes.map { code ->
-//            val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
-//                Locale.of("", code)
-//            } else {
-//                @Suppress("DEPRECATION")
-//                Locale("", code)
-//            }
-//
-//            val name = locale.displayCountry
-//            // Correct emoji flag logic (Magic number 0x1F1E6)
-//            val flag = code.uppercase().map { char ->
-//                Character.codePointAt("$char", 0) - 'A'.code + 0x1F1E6
-//            }.joinToString("") { String(Character.toChars(it)) }
-//
-//            Country(name, code, flag)
-//        }.sortedBy { it.name }
-//    }
+    fun getSupportedNewsCountries(): List<Country> {
+        val supportedCodes = setOf(
+            "ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co", "cu", "cz", "de",
+            "eg", "fr", "gb", "gr", "hk", "hu", "id", "ie", "il", "in", "it", "jp", "kr", "lt",
+            "lv", "ma", "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro", "rs", "ru",
+            "sa", "se", "sg", "si", "sk", "th", "tr", "tw", "ua", "us", "ve", "za"
+        )
+
+        return supportedCodes.map { code ->
+            val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+                Locale.of("", code)
+            } else {
+                @Suppress("DEPRECATION")
+                (Locale("", code))
+            }
+
+            val name = locale.displayCountry
+            // Correct emoji flag logic (Magic number 0x1F1E6)
+            val flag = code.uppercase().map { char ->
+                Character.codePointAt("$char", 0) - 'A'.code + 0x1F1E6
+            }.joinToString("") { String(Character.toChars(it)) }
+
+            Country(name, code, flag)
+        }.sortedBy { it.name }
+    }
 //
 //    fun getSupportedNewsLanguages(): List<Language> {
 //        val supportedCodes = listOf(

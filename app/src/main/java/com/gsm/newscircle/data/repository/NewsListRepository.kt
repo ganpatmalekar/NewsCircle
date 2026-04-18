@@ -17,4 +17,12 @@ class NewsListRepository @Inject constructor(private val networkService: Network
             it.apiArticles
         }
     }
+
+    fun getAllNewsByCountry(country: String): Flow<List<ApiArticle>> {
+        return flow {
+            emit(networkService.getNewsByCountry(country))
+        }.map {
+            it.apiArticles
+        }
+    }
 }
