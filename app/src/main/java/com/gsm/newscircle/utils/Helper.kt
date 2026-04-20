@@ -7,6 +7,7 @@ import androidx.browser.customtabs.CustomTabsIntent.SHARE_STATE_ON
 import androidx.core.net.toUri
 import com.gsm.newscircle.data.model.Country
 import com.gsm.newscircle.data.model.Language
+import com.gsm.newscircle.data.model.SortOption
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -68,6 +69,16 @@ object Helper {
         }.sortedBy { it.name }
     }
 
+    fun getSortOptions(): List<SortOption> {
+        val sortList = arrayListOf(
+            SortOption("Relevancy", "Most relevant first", "relevancy"),
+            SortOption("Popularity", "Most popular first", "popularity"),
+            SortOption("Published Date", "Newest first", "publishedAt")
+        )
+        return sortList
+    }
+
+
     /**
      * Maps network exceptions and HTTP status codes to user-friendly error messages.
      */
@@ -82,6 +93,7 @@ object Helper {
                     else -> "Something went wrong: ${e.message()}"
                 }
             }
+
             is SocketTimeoutException -> "The server is taking too long to respond. Please try again."
             is IOException -> "IOException: ${e.localizedMessage}"
             else -> e.localizedMessage ?: "An unexpected error occurred."

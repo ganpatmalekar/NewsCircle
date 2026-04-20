@@ -18,7 +18,7 @@
     <string name="select_language">Select Language</string>
     <string name="english">English</string>
     <string name="no_articles_found_subtitle">There are no articles available for %1$s at the moment.</string>
-    <string name="search_news_hint">Search for news…</string>
+    <string name="search_news_hint">Search for news, topic, source</string>
     <string name="search_news_helper_text">Start typing to search for news</string>
     <string name="top_headlines_offline_architecture">Top Headlines (Offline Architecture)</string>
     <string name="top_headlines_offline_architecture_subtext">Access news even without internet</string>
@@ -29,4 +29,5 @@
     <string name="news_by_sources">News by Sources</string>
     <string name="no_sources_found">No Sources Found</string>
     <string name="no_sources_found_at_the_moment">No sources found at the moment, please check after sometime.</string>
+    <string name="sort_by">Sort by</string>
 </resources>

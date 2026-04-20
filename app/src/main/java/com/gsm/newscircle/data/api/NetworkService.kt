@@ -33,4 +33,11 @@ interface NetworkService {
         @Query("q") query: String = AppConstants.DEFAULT_QUERY,
         @Query("language") language: String
     ): TopHeadlinesResponse
+
+    @GET("everything")
+    suspend fun getNewsByQuery(
+        @Query("q") query: String = AppConstants.DEFAULT_QUERY,
+        @Query("searchIn") searchIn: String = AppConstants.SEARCH_IN,
+        @Query("sortBy") sortBy: String = AppConstants.SORT_BY_OPTION
+    ): TopHeadlinesResponse
 }

@@ -7,6 +7,9 @@ object AppConstants {
     const val API_KEY_HEADER = "X-Api-Key"
     const val NEWS_BY_SOURCES = "sources"
     const val DEFAULT_QUERY = "World"
+    const val SEARCH_IN = "title"
+    const val SORT_BY_OPTION = "publishedAt"
+    const val DEBOUNCE_TIME = 300L
     const val NO_ARTICLES = "no articles"
     const val NO_SOURCES = "no sources"
     const val NO_INTERNET_MSG = "Please check your internet connection and try again."
@@ -15,4 +18,5 @@ object AppConstants {
     const val NEWS_LIST_VIEWMODEL_TAG = "NewsListViewModel"
     const val COUNTRY_LIST_VIEWMODEL_TAG = "CountryListViewModel"
     const val LANGUAGE_LIST_VIEWMODEL_TAG = "LanguageListViewModel"
+    const val SEARCH_NEWS_VIEWMODEL_TAG = "SearchNewsViewModel"
 }

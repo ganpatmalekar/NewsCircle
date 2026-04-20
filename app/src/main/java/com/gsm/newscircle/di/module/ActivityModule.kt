@@ -7,6 +7,7 @@ import com.gsm.newscircle.data.repository.CountryListRepository
 import com.gsm.newscircle.data.repository.LanguageListRepository
 import com.gsm.newscircle.data.repository.NewsListRepository
 import com.gsm.newscircle.data.repository.NewsSourceRepository
+import com.gsm.newscircle.data.repository.SearchNewsRepository
 import com.gsm.newscircle.data.repository.TopHeadlineRepository
 import com.gsm.newscircle.di.ActivityContext
 import com.gsm.newscircle.ui.base.ViewModelProviderFactory
@@ -15,6 +16,8 @@ import com.gsm.newscircle.ui.country.CountryListViewModel
 import com.gsm.newscircle.ui.language.LanguageListAdapter
 import com.gsm.newscircle.ui.language.LanguageListViewModel
 import com.gsm.newscircle.ui.news.NewsListViewModel
+import com.gsm.newscircle.ui.search.SearchNewsViewModel
+import com.gsm.newscircle.ui.search.SortOptionsAdapter
 import com.gsm.newscircle.ui.source.NewsSourceAdapter
 import com.gsm.newscircle.ui.source.NewsSourceViewModel
 import com.gsm.newscircle.ui.topheadline.TopHeadlineAdapter
@@ -129,6 +132,26 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
     }
 
     @Provides
+    fun providesSearchNewsViewModel(
+        searchNewsRepository: SearchNewsRepository,
+        dispatcherProvider: DispatcherProvider,
+        networkHelper: NetworkHelper,
+        loggerService: LoggerService
+    ): SearchNewsViewModel {
+        return ViewModelProvider(
+            mActivity,
+            ViewModelProviderFactory(SearchNewsViewModel::class) {
+                SearchNewsViewModel(
+                    searchNewsRepository,
+                    dispatcherProvider,
+                    networkHelper,
+                    loggerService
+                )
+            }
+        )[SearchNewsViewModel::class.java]
+    }
+
+    @Provides
     fun providesTopHeadlineAdapter() = TopHeadlineAdapter()
 
     @Provides
@@ -139,4 +162,7 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
 
     @Provides
     fun providesLanguageListAdapter() = LanguageListAdapter()
+
+    @Provides
+    fun providesSortOptionAdapter() = SortOptionsAdapter()
 }

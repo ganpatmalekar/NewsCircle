@@ -7,6 +7,7 @@ import com.gsm.newscircle.ui.country.NewsByCountryActivity
 import com.gsm.newscircle.ui.language.LanguageListBottomSheet
 import com.gsm.newscircle.ui.language.NewsByLanguageActivity
 import com.gsm.newscircle.ui.news.NewsListActivity
+import com.gsm.newscircle.ui.search.SearchNewsActivity
 import com.gsm.newscircle.ui.source.NewsSourceActivity
 import com.gsm.newscircle.ui.topheadline.TopHeadlineActivity
 import dagger.Component
@@ -21,4 +22,5 @@ interface ActivityComponent {
     fun inject(fragment: CountryListBottomSheet)
     fun inject(activity: NewsByLanguageActivity)
     fun inject(fragment: LanguageListBottomSheet)
+    fun inject(activity: SearchNewsActivity)
 }
