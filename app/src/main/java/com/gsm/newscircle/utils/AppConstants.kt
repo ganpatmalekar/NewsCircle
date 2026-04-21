@@ -5,6 +5,7 @@ object AppConstants {
     const val COUNTRY = "us"
     const val LANGUAGE = "en"
     const val API_KEY_HEADER = "X-Api-Key"
+    const val DB_NAME = "ArticlesDB"
     const val NEWS_BY_SOURCES = "sources"
     const val DEFAULT_QUERY = "World"
     const val SEARCH_IN = "title"
@@ -19,4 +20,5 @@ object AppConstants {
     const val COUNTRY_LIST_VIEWMODEL_TAG = "CountryListViewModel"
     const val LANGUAGE_LIST_VIEWMODEL_TAG = "LanguageListViewModel"
     const val SEARCH_NEWS_VIEWMODEL_TAG = "SearchNewsViewModel"
+    const val TOP_HEADLINE_OFFLINE_VIEWMODEL_TAG = "TopHeadlineOfflineViewModel"
 }

@@ -56,6 +56,10 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+
     // Core OkHttp library
     implementation(libs.okhttp)
 

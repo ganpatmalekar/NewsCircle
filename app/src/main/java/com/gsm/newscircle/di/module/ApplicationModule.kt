@@ -1,12 +1,17 @@
 package com.gsm.newscircle.di.module
 
 import android.content.Context
+import androidx.room.Room
 import com.gsm.newscircle.BuildConfig
 import com.gsm.newscircle.NewsApplication
 import com.gsm.newscircle.data.api.ApiKeyInterceptor
 import com.gsm.newscircle.data.api.NetworkService
+import com.gsm.newscircle.data.local.DatabaseService
+import com.gsm.newscircle.data.local.NewsCircleDatabase
+import com.gsm.newscircle.data.local.entity.DatabaseServiceImpl
 import com.gsm.newscircle.di.ApplicationContext
 import com.gsm.newscircle.di.BaseUrl
+import com.gsm.newscircle.di.DatabaseName
 import com.gsm.newscircle.di.NetworkApiKey
 import com.gsm.newscircle.utils.AppConstants
 import com.gsm.newscircle.utils.DefaultDispatcherProvider
@@ -77,6 +82,29 @@ class ApplicationModule(private val application: NewsApplication) {
     @Singleton
     fun providesNetworkService(retrofit: Retrofit): NetworkService =
         retrofit.create(NetworkService::class.java)
+
+    @Provides
+    @DatabaseName
+    fun providesDatabaseName(): String = AppConstants.DB_NAME
+
+    @Provides
+    @Singleton
+    fun providesAppDatabase(
+        @ApplicationContext context: Context,
+        @DatabaseName databaseName: String
+    ): NewsCircleDatabase {
+        return Room.databaseBuilder(
+            context,
+            NewsCircleDatabase::class.java,
+            databaseName
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesDatabaseService(appDatabase: NewsCircleDatabase): DatabaseService {
+        return DatabaseServiceImpl(appDatabase)
+    }
 
     @Provides
     @Singleton

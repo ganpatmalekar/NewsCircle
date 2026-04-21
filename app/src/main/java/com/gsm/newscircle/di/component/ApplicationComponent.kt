@@ -7,6 +7,7 @@ import com.gsm.newscircle.data.repository.LanguageListRepository
 import com.gsm.newscircle.data.repository.NewsListRepository
 import com.gsm.newscircle.data.repository.NewsSourceRepository
 import com.gsm.newscircle.data.repository.SearchNewsRepository
+import com.gsm.newscircle.data.repository.TopHeadlineOfflineRepository
 import com.gsm.newscircle.data.repository.TopHeadlineRepository
 import com.gsm.newscircle.di.ApplicationContext
 import com.gsm.newscircle.di.module.ApplicationModule
@@ -31,6 +32,7 @@ interface ApplicationComponent {
     fun getCountryListRepository(): CountryListRepository
     fun getLanguageListRepository(): LanguageListRepository
     fun getSearchNewsRepository(): SearchNewsRepository
+    fun getTopHeadlineOfflineRepository(): TopHeadlineOfflineRepository
 
     fun getDispatcherProvider(): DispatcherProvider
 

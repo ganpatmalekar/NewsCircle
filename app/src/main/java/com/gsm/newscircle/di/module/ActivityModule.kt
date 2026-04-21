@@ -8,6 +8,7 @@ import com.gsm.newscircle.data.repository.LanguageListRepository
 import com.gsm.newscircle.data.repository.NewsListRepository
 import com.gsm.newscircle.data.repository.NewsSourceRepository
 import com.gsm.newscircle.data.repository.SearchNewsRepository
+import com.gsm.newscircle.data.repository.TopHeadlineOfflineRepository
 import com.gsm.newscircle.data.repository.TopHeadlineRepository
 import com.gsm.newscircle.di.ActivityContext
 import com.gsm.newscircle.ui.base.ViewModelProviderFactory
@@ -16,6 +17,8 @@ import com.gsm.newscircle.ui.country.CountryListViewModel
 import com.gsm.newscircle.ui.language.LanguageListAdapter
 import com.gsm.newscircle.ui.language.LanguageListViewModel
 import com.gsm.newscircle.ui.news.NewsListViewModel
+import com.gsm.newscircle.ui.offline.TopHeadlineOfflineAdapter
+import com.gsm.newscircle.ui.offline.TopHeadlineOfflineViewModel
 import com.gsm.newscircle.ui.search.SearchNewsViewModel
 import com.gsm.newscircle.ui.search.SortOptionsAdapter
 import com.gsm.newscircle.ui.source.NewsSourceAdapter
@@ -27,6 +30,7 @@ import com.gsm.newscircle.utils.NetworkHelper
 import com.gsm.newscircle.utils.logger.LoggerService
 import dagger.Module
 import dagger.Provides
+import kotlin.jvm.java
 
 @Module
 class ActivityModule(private val mActivity: AppCompatActivity) {
@@ -152,6 +156,26 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
     }
 
     @Provides
+    fun providesTopHeadlineOfflineViewModel(
+        topHeadlineOfflineRepository: TopHeadlineOfflineRepository,
+        dispatcherProvider: DispatcherProvider,
+        networkHelper: NetworkHelper,
+        loggerService: LoggerService
+    ): TopHeadlineOfflineViewModel {
+        return ViewModelProvider(
+            mActivity,
+            ViewModelProviderFactory(TopHeadlineOfflineViewModel::class) {
+                TopHeadlineOfflineViewModel(
+                    topHeadlineOfflineRepository,
+                    dispatcherProvider,
+                    networkHelper,
+                    loggerService
+                )
+            }
+        )[TopHeadlineOfflineViewModel::class.java]
+    }
+
+    @Provides
     fun providesTopHeadlineAdapter() = TopHeadlineAdapter()
 
     @Provides
@@ -165,4 +189,6 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
 
     @Provides
     fun providesSortOptionAdapter() = SortOptionsAdapter()
+    @Provides
+    fun providesTopHeadlineOfflineAdapter() = TopHeadlineOfflineAdapter()
 }
