@@ -14,6 +14,9 @@ object AppConstants {
     const val NO_ARTICLES = "no articles"
     const val NO_SOURCES = "no sources"
     const val NO_INTERNET_MSG = "Please check your internet connection and try again."
+    // Pagination
+    const val INITIAL_PAGE = 1
+    const val PAGE_SIZE = 20
     const val TOP_HEADLINE_VIEWMODEL_TAG = "TopHeadlineViewModel"
     const val NEWS_SOURCE_VIEWMODEL_TAG = "NewsSourceViewModel"
     const val NEWS_LIST_VIEWMODEL_TAG = "NewsListViewModel"

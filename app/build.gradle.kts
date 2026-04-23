@@ -66,6 +66,9 @@ dependencies {
     // Logging Interceptor (separate dependency)
     implementation(libs.logging.interceptor)
 
+    // Paging 3 library
+    implementation(libs.androidx.paging.runtime)
+
     // Custom Tab
     implementation(libs.androidx.browser)
 

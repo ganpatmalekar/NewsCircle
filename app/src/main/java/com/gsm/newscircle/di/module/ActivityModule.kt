@@ -9,6 +9,7 @@ import com.gsm.newscircle.data.repository.NewsListRepository
 import com.gsm.newscircle.data.repository.NewsSourceRepository
 import com.gsm.newscircle.data.repository.SearchNewsRepository
 import com.gsm.newscircle.data.repository.TopHeadlineOfflineRepository
+import com.gsm.newscircle.data.repository.TopHeadlinePagingRepository
 import com.gsm.newscircle.data.repository.TopHeadlineRepository
 import com.gsm.newscircle.di.ActivityContext
 import com.gsm.newscircle.ui.base.ViewModelProviderFactory
@@ -19,6 +20,8 @@ import com.gsm.newscircle.ui.language.LanguageListViewModel
 import com.gsm.newscircle.ui.news.NewsListViewModel
 import com.gsm.newscircle.ui.offline.TopHeadlineOfflineAdapter
 import com.gsm.newscircle.ui.offline.TopHeadlineOfflineViewModel
+import com.gsm.newscircle.ui.pagination.TopHeadlinePaginationViewModel
+import com.gsm.newscircle.ui.pagination.TopHeadlinePagingAdapter
 import com.gsm.newscircle.ui.search.SearchNewsViewModel
 import com.gsm.newscircle.ui.search.SortOptionsAdapter
 import com.gsm.newscircle.ui.source.NewsSourceAdapter
@@ -176,6 +179,20 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
     }
 
     @Provides
+    fun providesTopHeadlinePaginationViewModel(
+        topHeadlinePagingRepository: TopHeadlinePagingRepository
+    ): TopHeadlinePaginationViewModel {
+        return ViewModelProvider(
+            mActivity,
+            ViewModelProviderFactory(TopHeadlinePaginationViewModel::class) {
+                TopHeadlinePaginationViewModel(
+                    topHeadlinePagingRepository
+                )
+            }
+        )[TopHeadlinePaginationViewModel::class.java]
+    }
+
+    @Provides
     fun providesTopHeadlineAdapter() = TopHeadlineAdapter()
 
     @Provides
@@ -189,6 +206,10 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
 
     @Provides
     fun providesSortOptionAdapter() = SortOptionsAdapter()
+
     @Provides
     fun providesTopHeadlineOfflineAdapter() = TopHeadlineOfflineAdapter()
+
+    @Provides
+    fun providesTopHeadlinePagingAdapter() = TopHeadlinePagingAdapter()
 }

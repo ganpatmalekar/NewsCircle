@@ -8,6 +8,7 @@ import com.gsm.newscircle.ui.language.LanguageListBottomSheet
 import com.gsm.newscircle.ui.language.NewsByLanguageActivity
 import com.gsm.newscircle.ui.news.NewsListActivity
 import com.gsm.newscircle.ui.offline.OfflineTopHeadlineActivity
+import com.gsm.newscircle.ui.pagination.TopHeadlinePaginationActivity
 import com.gsm.newscircle.ui.search.SearchNewsActivity
 import com.gsm.newscircle.ui.source.NewsSourceActivity
 import com.gsm.newscircle.ui.topheadline.TopHeadlineActivity
@@ -25,4 +26,5 @@ interface ActivityComponent {
     fun inject(fragment: LanguageListBottomSheet)
     fun inject(activity: SearchNewsActivity)
     fun inject(activity: OfflineTopHeadlineActivity)
+    fun inject(activity: TopHeadlinePaginationActivity)
 }

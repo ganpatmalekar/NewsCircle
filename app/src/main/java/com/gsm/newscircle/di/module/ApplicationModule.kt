@@ -8,7 +8,7 @@ import com.gsm.newscircle.data.api.ApiKeyInterceptor
 import com.gsm.newscircle.data.api.NetworkService
 import com.gsm.newscircle.data.local.DatabaseService
 import com.gsm.newscircle.data.local.NewsCircleDatabase
-import com.gsm.newscircle.data.local.entity.DatabaseServiceImpl
+import com.gsm.newscircle.data.local.DatabaseServiceImpl
 import com.gsm.newscircle.di.ApplicationContext
 import com.gsm.newscircle.di.BaseUrl
 import com.gsm.newscircle.di.DatabaseName

@@ -1,7 +1,6 @@
-package com.gsm.newscircle.data.local.entity
+package com.gsm.newscircle.data.local
 
-import com.gsm.newscircle.data.local.DatabaseService
-import com.gsm.newscircle.data.local.NewsCircleDatabase
+import com.gsm.newscircle.data.local.entity.Article
 import kotlinx.coroutines.flow.Flow
 
 class DatabaseServiceImpl(private val database: NewsCircleDatabase) : DatabaseService {
