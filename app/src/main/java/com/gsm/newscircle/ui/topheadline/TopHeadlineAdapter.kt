@@ -53,9 +53,9 @@ class TopHeadlineAdapter :
         fun bind(item: ApiArticle, itemClickListener: ItemClickListener<ApiArticle>) {
             binding.apply {
                 tvTitle.text = item.title
-                tvDescription.text = item.description
+                tvDescription.text = item.description ?: "NA"
                 tvSource.text = item.apiSource.name
-                tvAuthor.text = item.author
+                tvAuthor.text = item.author?.trim() ?: "NA"
                 Glide.with(imageViewBanner.context)
                     .load(item.urlToImage)
                     .placeholder(R.drawable.ic_news_placeholder)

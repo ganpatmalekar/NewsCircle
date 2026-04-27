@@ -56,11 +56,18 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+
     // Core OkHttp library
     implementation(libs.okhttp)
 
     // Logging Interceptor (separate dependency)
     implementation(libs.logging.interceptor)
+
+    // Paging 3 library
+    implementation(libs.androidx.paging.runtime)
 
     // Custom Tab
     implementation(libs.androidx.browser)
@@ -71,6 +78,9 @@ dependencies {
     // Lottie
     implementation(libs.lottie)
 
+    // SplashScreen API
+    implementation(libs.androidx.core.splashscreen)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
@@ -80,6 +90,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.androidx.core.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
