@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,26 +14,26 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.gsm.newscircle.NewsApplication
 import com.gsm.newscircle.R
 import com.gsm.newscircle.data.model.topheadline.ApiArticle
 import com.gsm.newscircle.databinding.ActivitySearchNewsBinding
 import com.gsm.newscircle.databinding.LayoutSortOptionPopupBinding
-import com.gsm.newscircle.di.component.DaggerActivityComponent
-import com.gsm.newscircle.di.module.ActivityModule
 import com.gsm.newscircle.ui.base.UiState
 import com.gsm.newscircle.ui.topheadline.TopHeadlineAdapter
 import com.gsm.newscircle.utils.AppConstants
 import com.gsm.newscircle.utils.Helper.openNewsOnBrowser
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchNewsActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySearchNewsBinding
 
-    @Inject
-    lateinit var searchNewsViewModel: SearchNewsViewModel
+    private val searchNewsViewModel: SearchNewsViewModel by viewModels()
 
     @Inject
     lateinit var topHeadlineAdapter: TopHeadlineAdapter
@@ -40,8 +41,9 @@ class SearchNewsActivity : AppCompatActivity() {
     @Inject
     lateinit var sortOptionsAdapter: SortOptionsAdapter
 
+    private var searchJob: Job? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
 
         binding = ActivitySearchNewsBinding.inflate(layoutInflater)
@@ -96,7 +98,11 @@ class SearchNewsActivity : AppCompatActivity() {
                         0
                     )
                 }
-                searchNewsViewModel.searchNewsByQuery(query)
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+                    delay(AppConstants.DEBOUNCE_TIME)
+                    searchNewsViewModel.searchNewsByQuery(query)
+                }
             }
 
             etSearchNews.setOnTouchListener { _, event ->
@@ -110,6 +116,10 @@ class SearchNewsActivity : AppCompatActivity() {
                     }
                 }
                 false
+            }
+
+            noInternetLayout.btnTryAgain.setOnClickListener {
+                searchNewsViewModel.retry()
             }
         }
     }
@@ -154,6 +164,7 @@ class SearchNewsActivity : AppCompatActivity() {
                             binding.apply {
                                 progressBar.visibility = View.VISIBLE
                                 rvSearchedNews.visibility = View.GONE
+                                noInternetLayout.clNoInternet.visibility = View.GONE
                                 noArticlesLayout.clNoArticles.visibility = View.GONE
                             }
                         }
@@ -207,13 +218,5 @@ class SearchNewsActivity : AppCompatActivity() {
                 tvNoArticleFoundSubtitle.text = errorMessage
             }
         }
-    }
-
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).daggerComponent)
-            .activityModule(ActivityModule(this))
-            .build()
-            .inject(this)
     }
 }

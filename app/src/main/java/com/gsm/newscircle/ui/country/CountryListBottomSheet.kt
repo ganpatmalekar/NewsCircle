@@ -5,22 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.gsm.newscircle.NewsApplication
 import com.gsm.newscircle.R
 import com.gsm.newscircle.databinding.CountryListBottomSheetBinding
-import com.gsm.newscircle.di.component.DaggerActivityComponent
-import com.gsm.newscircle.di.module.ActivityModule
 import com.gsm.newscircle.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CountryListBottomSheet(private val selectedCountryCode: String) :
     BottomSheetDialogFragment() {
 
@@ -31,15 +30,13 @@ class CountryListBottomSheet(private val selectedCountryCode: String) :
     @Inject
     lateinit var countryListAdapter: CountryListAdapter
 
-    @Inject
-    lateinit var countryListViewModel: CountryListViewModel
+    private val countryListViewModel: CountryListViewModel by activityViewModels()
 
     override fun getTheme(): Int {
         return R.style.AppBottomSheetDialogTheme
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
     }
 
@@ -107,14 +104,6 @@ class CountryListBottomSheet(private val selectedCountryCode: String) :
                 }
             }
         }
-    }
-
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((requireActivity().application as NewsApplication).daggerComponent)
-            .activityModule(ActivityModule(requireActivity() as AppCompatActivity))
-            .build()
-            .inject(this)
     }
 
     override fun onDestroyView() {

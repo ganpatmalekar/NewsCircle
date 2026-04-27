@@ -18,6 +18,15 @@ object AppConstants {
     // Pagination
     const val INITIAL_PAGE = 1
     const val PAGE_SIZE = 20
+    // Worker
+    const val NEWS_UPDATE_TIME = 6
+    const val UNIQUE_WORK_NAME = "DailyNewsFetchWork"
+    const val NOTIFICATION_CHANNEL_ID = "news_channel"
+    const val NOTIFICATION_CHANNEL_NAME = "News Updates"
+    const val NOTIFICATION_CHANNEL_DESCRIPTION = "Channel for News Updates"
+    const val NOTIFICATION_CONTENT_TITLE = "Fresh News Available!"
+    const val NOTIFICATION_CONTENT_TEXT = "Check out the latest top headlines for today."
+    const val NOTIFICATION_ID = 1
     const val TOP_HEADLINE_VIEWMODEL_TAG = "TopHeadlineViewModel"
     const val NEWS_SOURCE_VIEWMODEL_TAG = "NewsSourceViewModel"
     const val NEWS_LIST_VIEWMODEL_TAG = "NewsListViewModel"

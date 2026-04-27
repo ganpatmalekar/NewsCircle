@@ -4,12 +4,12 @@ import com.gsm.newscircle.data.api.NetworkService
 import com.gsm.newscircle.data.local.DatabaseService
 import com.gsm.newscircle.data.local.entity.Article
 import com.gsm.newscircle.data.model.topheadline.toArticleEntity
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@ViewModelScoped
 class TopHeadlineOfflineRepository @Inject constructor(
     private val networkService: NetworkService,
     private val databaseService: DatabaseService

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,25 +13,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gsm.newscircle.NewsApplication
 import com.gsm.newscircle.R
 import com.gsm.newscircle.data.model.topheadline.ApiArticle
 import com.gsm.newscircle.databinding.ActivityNewsListBinding
-import com.gsm.newscircle.di.component.DaggerActivityComponent
-import com.gsm.newscircle.di.module.ActivityModule
 import com.gsm.newscircle.ui.base.UiState
 import com.gsm.newscircle.ui.topheadline.TopHeadlineAdapter
 import com.gsm.newscircle.utils.AppConstants
 import com.gsm.newscircle.utils.Helper.openNewsOnBrowser
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsListActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityNewsListBinding
 
-    @Inject
-    lateinit var newsListViewModel: NewsListViewModel
+    private val newsListViewModel: NewsListViewModel by viewModels()
 
     @Inject
     lateinit var topHeadlineAdapter: TopHeadlineAdapter
@@ -49,7 +48,6 @@ class NewsListActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
 
         binding = ActivityNewsListBinding.inflate(layoutInflater)
@@ -162,13 +160,5 @@ class NewsListActivity : AppCompatActivity() {
                 tvNoArticleFoundSubtitle.text = errorMessage
             }
         }
-    }
-
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).daggerComponent)
-            .activityModule(ActivityModule(this))
-            .build()
-            .inject(this)
     }
 }

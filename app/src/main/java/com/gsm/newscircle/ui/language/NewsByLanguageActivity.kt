@@ -2,6 +2,7 @@ package com.gsm.newscircle.ui.language
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -9,33 +10,29 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gsm.newscircle.NewsApplication
 import com.gsm.newscircle.R
 import com.gsm.newscircle.data.model.topheadline.ApiArticle
 import com.gsm.newscircle.databinding.ActivityNewsByLanguageBinding
-import com.gsm.newscircle.di.component.DaggerActivityComponent
-import com.gsm.newscircle.di.module.ActivityModule
 import com.gsm.newscircle.ui.base.UiState
 import com.gsm.newscircle.ui.news.NewsListViewModel
 import com.gsm.newscircle.ui.topheadline.TopHeadlineAdapter
 import com.gsm.newscircle.utils.AppConstants
 import com.gsm.newscircle.utils.Helper.openNewsOnBrowser
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsByLanguageActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityNewsByLanguageBinding
     @Inject
     lateinit var topHeadlineAdapter: TopHeadlineAdapter
-    @Inject
-    lateinit var newsListViewModel: NewsListViewModel
-    @Inject
-    lateinit var languageListViewModel: LanguageListViewModel
+    private val newsListViewModel: NewsListViewModel by viewModels()
+    private val languageListViewModel: LanguageListViewModel by viewModels()
     private var selectedLanguageCode = AppConstants.LANGUAGE
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
 
         binding = ActivityNewsByLanguageBinding.inflate(layoutInflater)
@@ -68,6 +65,9 @@ class NewsByLanguageActivity : AppCompatActivity() {
                 setHasFixedSize(true)
                 adapter = topHeadlineAdapter
             }
+            noInternetLayout.btnTryAgain.setOnClickListener {
+                newsListViewModel.fetchAllNewsByLanguage(selectedLanguageCode)
+            }
         }
         topHeadlineAdapter.itemClickListener = { article ->
             openNewsOnBrowser(this@NewsByLanguageActivity, article.url)
@@ -97,6 +97,7 @@ class NewsByLanguageActivity : AppCompatActivity() {
                 UiState.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.rvNews.visibility = View.GONE
+                    binding.noInternetLayout.clNoInternet.visibility = View.GONE
                     binding.noArticlesLayout.clNoArticles.visibility = View.GONE
                 }
 
@@ -147,13 +148,5 @@ class NewsByLanguageActivity : AppCompatActivity() {
                 tvNoArticleFoundSubtitle.text = errorMessage
             }
         }
-    }
-
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).daggerComponent)
-            .activityModule(ActivityModule(this))
-            .build()
-            .inject(this)
     }
 }

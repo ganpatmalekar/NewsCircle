@@ -4,12 +4,12 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.gsm.newscircle.data.api.NetworkService
 import com.gsm.newscircle.data.model.topheadline.ApiArticle
-import com.gsm.newscircle.di.ActivityScope
 import com.gsm.newscircle.utils.AppConstants.COUNTRY
 import com.gsm.newscircle.utils.AppConstants.INITIAL_PAGE
 import com.gsm.newscircle.utils.AppConstants.PAGE_SIZE
+import dagger.hilt.android.scopes.ActivityScoped
 
-@ActivityScope
+@ActivityScoped
 class TopHeadlinePagingSource(private val networkService: NetworkService) :
     PagingSource<Int, ApiArticle>() {
     override fun getRefreshKey(state: PagingState<Int, ApiArticle>): Int? {

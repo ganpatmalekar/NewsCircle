@@ -5,30 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.gsm.newscircle.NewsApplication
 import com.gsm.newscircle.R
 import com.gsm.newscircle.databinding.LanguageListBottomSheetBinding
-import com.gsm.newscircle.di.component.DaggerActivityComponent
-import com.gsm.newscircle.di.module.ActivityModule
 import com.gsm.newscircle.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LanguageListBottomSheet(private val selectedLanguageCode: String) :
     BottomSheetDialogFragment() {
 
     private var _binding: LanguageListBottomSheetBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var languageListViewModel: LanguageListViewModel
+    private val languageListViewModel: LanguageListViewModel by activityViewModels()
 
     @Inject
     lateinit var languageListAdapter: LanguageListAdapter
@@ -38,7 +36,6 @@ class LanguageListBottomSheet(private val selectedLanguageCode: String) :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
     }
 
@@ -103,14 +100,6 @@ class LanguageListBottomSheet(private val selectedLanguageCode: String) :
             behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             behavior.skipCollapsed = true
         }
-    }
-
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((requireActivity().application as NewsApplication).daggerComponent)
-            .activityModule(ActivityModule(requireActivity() as AppCompatActivity))
-            .build()
-            .inject(this)
     }
 
     override fun onDestroyView() {
