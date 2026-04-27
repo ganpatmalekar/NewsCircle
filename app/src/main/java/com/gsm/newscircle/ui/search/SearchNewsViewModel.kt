@@ -13,20 +13,20 @@ import com.gsm.newscircle.utils.Helper
 import com.gsm.newscircle.utils.Helper.handleError
 import com.gsm.newscircle.utils.NetworkHelper
 import com.gsm.newscircle.utils.logger.LoggerService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchNewsViewModel(
+@HiltViewModel
+class SearchNewsViewModel @Inject constructor(
     private val searchNewsRepository: SearchNewsRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val networkHelper: NetworkHelper,
@@ -37,27 +37,27 @@ class SearchNewsViewModel(
 
     private var _queryStateFlow = MutableStateFlow("")
     private var _sortByStateFlow = MutableStateFlow(AppConstants.SORT_BY_OPTION)
+    private val _searchTrigger = MutableSharedFlow<Unit>(replay = 1)
 
     private fun isInternetAvailable(): Boolean = networkHelper.isNetworkConnected()
 
     init {
-        if (isInternetAvailable()) {
-            handleSearch()
-        } else {
-            _searchUiState.value = UiState.Error(AppConstants.NO_INTERNET_MSG)
-        }
+        _searchTrigger.tryEmit(Unit)
+        handleSearch()
     }
 
-    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun handleSearch() {
         viewModelScope.launch(dispatcherProvider.main) {
-            _queryStateFlow
-                .combine(_sortByStateFlow) { query, sortBy ->
-                    Pair(query, sortBy)
-                }
-                .debounce(AppConstants.DEBOUNCE_TIME)
-                .distinctUntilChanged()
-                .flatMapLatest { (query, sortBy) ->
+            _searchTrigger
+                .flatMapLatest {
+                    val query = _queryStateFlow.value
+                    val sortBy = _sortByStateFlow.value
+
+                    if (!isInternetAvailable()) {
+                        _searchUiState.value = UiState.Error(AppConstants.NO_INTERNET_MSG)
+                        return@flatMapLatest emptyFlow()
+                    }
                     val searchQuery = when {
                         query.isEmpty() -> AppConstants.DEFAULT_QUERY
                         query.isBlank() -> {
@@ -82,11 +82,21 @@ class SearchNewsViewModel(
     }
 
     fun searchNewsByQuery(queryString: String) {
-        _queryStateFlow.value = queryString
+        if (_queryStateFlow.value != queryString) {
+            _queryStateFlow.value = queryString
+            _searchTrigger.tryEmit(Unit)
+        }
     }
 
     fun setSortByOption(sortBy: String) {
-        _sortByStateFlow.value = sortBy
+        if (_sortByStateFlow.value != sortBy) {
+            _sortByStateFlow.value = sortBy
+            _searchTrigger.tryEmit(Unit)
+        }
+    }
+
+    fun retry() {
+        _searchTrigger.tryEmit(Unit)
     }
 
     fun getSortOptions(): List<SortOption> {

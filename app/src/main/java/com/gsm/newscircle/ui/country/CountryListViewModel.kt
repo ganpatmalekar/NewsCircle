@@ -9,13 +9,16 @@ import com.gsm.newscircle.utils.AppConstants.COUNTRY_LIST_VIEWMODEL_TAG
 import com.gsm.newscircle.utils.DispatcherProvider
 import com.gsm.newscircle.utils.Helper.handleError
 import com.gsm.newscircle.utils.logger.LoggerService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CountryListViewModel(
+@HiltViewModel
+class CountryListViewModel @Inject constructor(
     private val countryListRepository: CountryListRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val logger: LoggerService

@@ -3,13 +3,11 @@ package com.gsm.newscircle.di.module
 import android.content.Context
 import androidx.room.Room
 import com.gsm.newscircle.BuildConfig
-import com.gsm.newscircle.NewsApplication
 import com.gsm.newscircle.data.api.ApiKeyInterceptor
 import com.gsm.newscircle.data.api.NetworkService
 import com.gsm.newscircle.data.local.DatabaseService
-import com.gsm.newscircle.data.local.NewsCircleDatabase
 import com.gsm.newscircle.data.local.DatabaseServiceImpl
-import com.gsm.newscircle.di.ApplicationContext
+import com.gsm.newscircle.data.local.NewsCircleDatabase
 import com.gsm.newscircle.di.BaseUrl
 import com.gsm.newscircle.di.DatabaseName
 import com.gsm.newscircle.di.NetworkApiKey
@@ -22,6 +20,9 @@ import com.gsm.newscircle.utils.logger.LoggerService
 import com.gsm.newscircle.utils.logger.LoggerServiceImpl
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -30,11 +31,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: NewsApplication) {
-
-    @ApplicationContext
-    @Provides
-    fun provideContext(): Context = application
+@InstallIn(SingletonComponent::class)
+object ApplicationModule {
 
     @BaseUrl
     @Provides

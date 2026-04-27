@@ -10,13 +10,16 @@ import com.gsm.newscircle.utils.AppConstants.LANGUAGE_LIST_VIEWMODEL_TAG
 import com.gsm.newscircle.utils.DispatcherProvider
 import com.gsm.newscircle.utils.Helper.handleError
 import com.gsm.newscircle.utils.logger.LoggerService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LanguageListViewModel(
+@HiltViewModel
+class LanguageListViewModel @Inject constructor(
     private val languageListRepository: LanguageListRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val logger: LoggerService
@@ -24,7 +27,7 @@ class LanguageListViewModel(
     private val _languageUiState = MutableStateFlow<UiState<List<Language>>>(UiState.Loading)
     val languageUiState: StateFlow<UiState<List<Language>>> = _languageUiState
 
-    private val _selectedLanguage = MutableStateFlow<Language>(Language("English", "en"))
+    private val _selectedLanguage = MutableStateFlow(Language("English", "en"))
     val selectedLanguage: StateFlow<Language> = _selectedLanguage
 
     fun setLanguage(language: Language) {

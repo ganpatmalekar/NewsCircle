@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.android.hilt)
     alias(libs.plugins.ksp)
 }
 
@@ -46,11 +47,12 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.constraintlayout)
 
-    // Dagger2
-    implementation(libs.dagger)
-    ksp(libs.dagger.compiler)
+    // Dagger Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
     // Retrofit
     implementation(libs.retrofit)
@@ -88,6 +90,11 @@ dependencies {
     // ViewModelScope and LifeCycleScope
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
