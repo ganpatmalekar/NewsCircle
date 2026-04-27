@@ -40,6 +40,8 @@
             android:drawablePadding="4dp"
             android:drawableTint="@color/colorOrange"
             android:hint="@string/search_news_hint"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:maxLines="1"
             android:padding="12dp"
             android:textColor="@android:color/black"

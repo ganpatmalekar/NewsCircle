@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.NewsCircle" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -13,5 +13,22 @@
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- BLOG - https://medium.com/@manishkumar_75473/building-a-splash-screen-in-android-the-right-way-2025-edition-084683381283 -->
+    <style name="Theme.NewsCircle.Splash" parent="Theme.SplashScreen">
+        <!-- Background color -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <!-- app logo -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_app_logo</item>
+        <!-- Animation duration -->
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <!-- Optional: remove status bar until transition -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <!-- Optional: Hide Navigation Bar -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <!-- Theme after splash -->
+        <item name="postSplashScreenTheme">@style/Theme.NewsCircle</item>
     </style>
 </resources>

@@ -78,6 +78,9 @@ dependencies {
     // Lottie
     implementation(libs.lottie)
 
+    // SplashScreen API
+    implementation(libs.androidx.core.splashscreen)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)

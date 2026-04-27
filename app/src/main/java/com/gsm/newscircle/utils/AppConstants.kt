@@ -14,6 +14,7 @@ object AppConstants {
     const val NO_ARTICLES = "no articles"
     const val NO_SOURCES = "no sources"
     const val NO_INTERNET_MSG = "Please check your internet connection and try again."
+    const val BLANK_QUERY_MSG = "No articles, enter at least one character to search."
     // Pagination
     const val INITIAL_PAGE = 1
     const val PAGE_SIZE = 20

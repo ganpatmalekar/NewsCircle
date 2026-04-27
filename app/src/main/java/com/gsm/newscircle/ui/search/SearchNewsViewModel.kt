@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -57,9 +58,15 @@ class SearchNewsViewModel(
                 .debounce(AppConstants.DEBOUNCE_TIME)
                 .distinctUntilChanged()
                 .flatMapLatest { (query, sortBy) ->
+                    val searchQuery = when {
+                        query.isEmpty() -> AppConstants.DEFAULT_QUERY
+                        query.isBlank() -> {
+                            _searchUiState.value = UiState.Error(AppConstants.BLANK_QUERY_MSG)
+                            return@flatMapLatest emptyFlow<List<ApiArticle>>()
+                        }
+                        else -> query.trim()
+                    }
                     _searchUiState.value = UiState.Loading
-                    // If search query is empty then it will initialize with default query
-                    val searchQuery = query.ifEmpty { AppConstants.DEFAULT_QUERY }
                     searchNewsRepository.getAllNewsByQuery(searchQuery, sortBy)
                         .catch { e ->
                             _searchUiState.value = UiState.Error(handleError(e))
